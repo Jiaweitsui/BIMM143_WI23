@@ -1,0 +1,72 @@
+---
+title: "HW06"
+author: "Jiawei Xu"
+format: pdf
+---
+
+```{r}
+# install.packages("bio3d") in console first, then library
+library(bio3d)
+
+s1 <- read.pdb("4AKE")
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s1.b <- s1.chainA$atom$b
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+
+#Q1. What type of object is returned from the read.pdb() function?
+# it returns a pdb file, which is a list containing 8 elements.
+
+# Q2. What does the trim.pdb() function do?
+# the function produces a new smaller PDB object, containing a subset of atoms, from a given larger PDB object.
+```
+
+```{r}
+#Q3. What input parameter would turn off the marginal black and grey rectangles in the plots and what do they represent in this case?
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor", top = FALSE, bot = FALSE)
+# top and bot. set both argument to FALSE to turn off the marginal black and grey rectangles
+```
+```{r}
+s1 <- read.pdb("4AKE")
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s1.b <- s1.chainA$atom$b
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+
+s2 <- read.pdb("1AKE") # kinase no drug
+s3 <- read.pdb("1E4Y") # kinase with drug
+
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s1, chain="A", elety="CA")
+
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+```
+
+
+```{r}
+#Q4. What would be a better plot to compare across the different proteins?
+# a cluster dendrogram would be a better plot
+
+hc <- hclust( dist( rbind(s1.b, s2.b, s3.b) ) )
+plot(hc)
+```
+
+```{r}
+#Q5. Which proteins are more similar to each other in their B-factor trends. How could you quantify this?
+# protein 1 and protein 3 (4AKE and 1E4Y)
+```
+
+```{r}
+#Generalize the code (write a funcrion)
+plot_pdb <- function(x){
+  s <- read.pdb(x)
+  s.chainA <- trim.pdb(s, chain="A", elety="CA")
+  s.b <- s.chainA$atom$b
+  plotb3(s.b, sse=s.chainA, typ="l", ylab="Bfactor")
+}
+
+plot_pdb("4AKE")
+```
+

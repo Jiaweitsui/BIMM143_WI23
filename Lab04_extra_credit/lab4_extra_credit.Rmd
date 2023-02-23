@@ -1,0 +1,75 @@
+---
+title: "Untitled"
+author: "Jiawei Xu"
+date: "2023-01-23"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+source("http://thegrantlab.org/misc/cdc.R")
+View(cdc)
+head(cdc$height)
+```
+
+```{r}
+tail(cdc$height)
+```
+
+```{r}
+plot(cdc$height, cdc$weight)
+
+plot(cdc[-c(1,2,3,4,7,8,9)])
+```
+
+```{r}
+library(ggplot2)
+ggplot(cdc, aes(x=cdc$height, y=cdc$weight))+
+  geom_point()
+```
+```{r}
+ggplot(cdc)+
+  aes(height, weight)+
+  geom_point()
+```
+
+```{r}
+cor(cdc$height, cdc$weight)
+```
+
+```{r}
+height_m <- cdc$height * 0.0254
+weight_kg <- cdc$weight * 0.454
+bmi <- weight_kg/(height_m^2)
+```
+
+```{r}
+plot(cdc$height, bmi)
+cor(cdc$height,bmi)
+```
+```{r}
+sum(bmi >= 30)
+
+```
+
+```{r}
+plot(cdc[1:100, "height"], cdc[1:100, "weight"])
+```
+
+```{r}
+cdc$bmi <- weight_kg/(height_m^2)
+table(cdc$gender[cdc$bmi>=30])
+```
+
+```{r}
+table(cdc$gender, cdc$bmi>30)
+```
+
+
+```{r}
+table(cdc$gender[subset(bmi,bmi>=30)])
+```
+

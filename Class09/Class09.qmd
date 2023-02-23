@@ -1,0 +1,43 @@
+---
+title: "Class09"
+author: "Jiawei Xu"
+format: pdf
+---
+
+```{r}
+pdbstats <- read.csv("Data Export Summary.csv", row.names = 1)
+head(pdbstats)
+```
+Q1: What percentage of structures in the PDB are solved by X-Ray and Electron Microscopy.
+```{r}
+n.xray <- sum(as.numeric(gsub(",", "", pdbstats$X.ray)))
+n.em <- sum(as.numeric(gsub(",", "", pdbstats$EM)))
+n.total <- sum(as.numeric(gsub(",", "", pdbstats$Total)))
+
+p.xray <- 100* n.xray/n.total
+p.em <- (n.em/n.total)*100
+
+round(p.xray, 2)
+round(p.em, 2)
+```
+
+Q2: What proportion of structures in the PDB are protein?
+
+Q3: Type HIV in the PDB website search box on the home page and determine how many HIV-1 protease structures are in the current PDB?
+
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+![](1HSG.png)
+
+
