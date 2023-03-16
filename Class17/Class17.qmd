@@ -1,0 +1,69 @@
+---
+title: "Class17"
+author: "Jiawei Xu"
+format: html
+---
+
+```{r}
+vax <- read.csv("covid19vaccinesbyzipcode_test.csv")
+head(vax)
+```
+
+in console install.packages("skimr")
+
+```{r}
+
+skimr::skim(vax)
+```
+
+```{r}
+sum(is.na(vax$persons_fully_vaccinated))
+```
+
+```{r}
+library(lubridate)
+```
+```{r}
+today()
+
+# This will give an Error!
+# Specify that we are using the year-month-day format
+vax$as_of_date <- ymd(vax$as_of_date)
+today() - vax$as_of_date[1]
+
+vax$as_of_date[nrow(vax)] - vax$as_of_date[1]
+```
+
+```{r}
+library(zipcodeR)
+geocode_zip('92037')
+```
+```{r}
+zip_distance('92037','92109')
+reverse_zipcode(c('92037', "92109") )
+```
+
+```{r}
+# Pull data for all ZIP codes in the dataset
+zipdata <- reverse_zipcode( vax$zip_code_tabulation_area )
+```
+
+
+```{r}
+library(dplyr)
+sd <- filter(vax, county == "San Diego")
+nrow(sd)
+```
+
+```{r}
+sd.10 <- filter(vax, county == "San Diego" &
+                age5_plus_population > 10000)
+```
+
+```{r}
+n_distinct(sd$zip_code_tabulation_area)
+```
+
+
+
+
